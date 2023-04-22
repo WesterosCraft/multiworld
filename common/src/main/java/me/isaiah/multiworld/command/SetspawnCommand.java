@@ -22,9 +22,9 @@ public class SetspawnCommand {
         BlockPos pos = plr.getBlockPos();
         try {
             setSpawn(w, pos);
-			
-			String txt = "Spawn for world \"" + w.getRegistryKey().getValue() + "\" changed to " + pos.toShortString();
-			
+
+            String txt = "Spawn for world \"" + w.getRegistryKey().getValue() + "\" changed to " + pos.toShortString();
+
             plr.sendMessage(text(txt, Formatting.GOLD), false);
         } catch (IOException e) {
             plr.sendMessage(text_plain("Error: " + e.getMessage()), false);
@@ -34,7 +34,10 @@ public class SetspawnCommand {
     }
 
     public static void setSpawn(World w, BlockPos spawn) throws IOException {
-        File cf = new File(FabricLoader.getInstance().getConfigDir().toFile(), "multiworld"); 
+        File config_dir = new File("config");
+        config_dir.mkdirs();
+
+        File cf = new File(config_dir, "multiworld");
         cf.mkdirs();
 
         File worlds = new File(cf, "worlds");
@@ -51,6 +54,5 @@ public class SetspawnCommand {
         config.set("spawnpos", spawn.asLong());
         config.save();
     }
-
 
 }

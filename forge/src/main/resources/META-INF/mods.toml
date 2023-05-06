@@ -1,15 +1,15 @@
 modLoader = "javafml"
 loaderVersion = "[38,)"
 #issueTrackerURL = ""
-license = "Insert License Here"
+license = "MIT"
 
 [[mods]]
 modId = "multiworld"
-version = "${version}"
+version = "1.4.1"
 displayName = "Multiworld"
-authors = "Me!"
+authors = "Isaiah"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+Adds support for teleporting to & creating multiple worlds.
 '''
 #logoFile = ""
 

@@ -17,4 +17,9 @@ public interface RemoveFromRegistry<T> {
     boolean remove(T value);
 
     boolean remove(Identifier key);
+    
+    void setFrozen(boolean var1);
+
+    boolean isFrozen();
+
 }

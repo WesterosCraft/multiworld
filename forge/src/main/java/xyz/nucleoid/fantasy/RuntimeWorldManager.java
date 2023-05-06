@@ -70,6 +70,6 @@ final class RuntimeWorldManager {
 
     private static SimpleRegistry<DimensionOptions> getDimensionsRegistry(MinecraftServer server) {
         GeneratorOptions generatorOptions = server.getSaveProperties().getGeneratorOptions();
-        return generatorOptions.getDimensions();
+        return (SimpleRegistry<DimensionOptions>) generatorOptions.getDimensions();
     }
 }

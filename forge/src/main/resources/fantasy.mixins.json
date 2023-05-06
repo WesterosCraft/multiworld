@@ -7,6 +7,7 @@
     "MinecraftServerAccess",
     "ServerChunkManagerMixin",
     "ServerWorldMixin",
+    "EntityMixin",
     "registry.SimpleRegistryMixin"
   ],
   "injectors": {

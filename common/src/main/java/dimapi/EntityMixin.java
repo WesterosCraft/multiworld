@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package xyz.nucleoid.fantasy.mixin;
+package dimapi;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,8 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.TeleportTarget;
-
-import dimapi.FabricDimensionInternals;
 
 /**
  * This mixin implements {@link Entity#getTeleportTarget(ServerWorld)} for modded dimensions, as Vanilla will

@@ -7,7 +7,7 @@ dependencies {
 }
 
 architectury {
-    common("forge","fabric")
+    common("forge")
 }
 
 publishing {

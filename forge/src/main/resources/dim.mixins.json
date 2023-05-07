@@ -9,5 +9,5 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "refmap": "Multiworld-common-refmap.json"
+  "refmap": "WCMultiworld-common-refmap.json"
 }

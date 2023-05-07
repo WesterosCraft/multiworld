@@ -5,8 +5,8 @@ license = "MIT"
 
 [[mods]]
 modId = "multiworld"
-version = "1.4.1"
-displayName = "Multiworld"
+version = "1.4.2"
+displayName = "WesterosCraft Multiworld"
 authors = "Isaiah"
 description = '''
 Adds support for teleporting to & creating multiple worlds.

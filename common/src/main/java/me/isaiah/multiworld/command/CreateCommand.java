@@ -16,7 +16,7 @@ import me.isaiah.multiworld.MultiworldMod;
 public class CreateCommand {
 
     public static int run(MinecraftServer mc, ServerPlayerEntity plr, String[] args) {
-        if (args.length == 1 && args.length == 2) {
+        if (args.length < 3) {
             plr.sendMessage(new LiteralText("Usage: /mv create <id> <env>"), false);
             return 0;
         }
@@ -31,15 +31,17 @@ public class CreateCommand {
             gen = mc.getWorld(World.OVERWORLD).getChunkManager().getChunkGenerator().withSeed(seed);
             dim = DimensionType.OVERWORLD_REGISTRY_KEY;
         }
-
-        if (args[2].contains("NETHER")) {
+        else if (args[2].contains("NETHER")) {
             gen = mc.getWorld(World.NETHER).getChunkManager().getChunkGenerator();
             dim = DimensionType.THE_NETHER_REGISTRY_KEY;
         }
-        
-        if (args[2].contains("END")) {
+        else if (args[2].contains("END")) {
             gen = mc.getWorld(World.END).getChunkManager().getChunkGenerator().withSeed(seed);
             dim = DimensionType.THE_END_REGISTRY_KEY;
+        }
+        else {
+            plr.sendMessage(new LiteralText("Invalid world type " + args[2]), false);
+            return 0;
         }
         
         String arg1 = args[1];

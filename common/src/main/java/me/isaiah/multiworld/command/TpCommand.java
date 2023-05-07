@@ -27,32 +27,13 @@ public class TpCommand {
 
         if (worlds.containsKey(arg1)) {
             ServerWorld w = worlds.get(arg1);
-            BlockPos sp = w.getSpawnPos();
-            if (!w.getDimension().isBedWorking() && !w.getDimension().hasCeiling()) {
-                ServerWorld.createEndSpawnPlatform(w);
-                sp = ServerWorld.END_SPAWN_POS;
-            }
-            if (null == sp) {
-                plr.sendMessage(new LiteralText("Error: null getSpawnPos").formatted(Formatting.RED), false);
-                sp = new BlockPos(1, 40, 1);
-            }
+
+            TeleportTarget target = SpawnCommand.getSpawn(w);
             plr.sendMessage(new LiteralText("Telelporting...").formatted(Formatting.GOLD), false);
-
-            sp = findSafePos(w, sp);
-
-            TeleportTarget target = new TeleportTarget(new Vec3d(sp.getX(), sp.getY(), sp.getZ()), new Vec3d(1, 1, 1), 0f, 0f);
+            
             FabricDimensionInternals.changeDimension(plr, w, target);
             return 1;
         }
         return 1;
     }
-
-    private static BlockPos findSafePos(ServerWorld w, BlockPos sp) {
-        BlockPos pos = sp;
-        while (w.getBlockState(pos) != Blocks.AIR.getDefaultState()) {
-            pos = pos.add(0, 1, 0);
-        }
-        return pos;
-    }
-
 }

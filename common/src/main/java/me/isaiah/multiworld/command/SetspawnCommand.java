@@ -10,17 +10,20 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class SetspawnCommand {
 
     public static int run(MinecraftServer mc, ServerPlayerEntity plr, String[] args) {
         World w = plr.getWorld();
-        BlockPos pos = plr.getBlockPos();
+        Vec3d pos = plr.getPos();
+        double py = plr.getYaw();
+        double pp = plr.getPitch();
         try {
-            setSpawn(w, pos);
+            setSpawn(w, pos, py, pp);
             plr.sendMessage(new LiteralText("Spawn for world \"" + w.getRegistryKey().getValue() + "\" changed to " 
-                    + pos.toShortString()).formatted(Formatting.GOLD), false);
+                    + pos.toString()).formatted(Formatting.GOLD), false);
         } catch (IOException e) {
             plr.sendMessage(new LiteralText("Error: " + e.getMessage()), false);
             e.printStackTrace();
@@ -28,7 +31,7 @@ public class SetspawnCommand {
         return 1;
     }
 
-    public static void setSpawn(World w, BlockPos spawn) throws IOException {
+    public static void setSpawn(World w, Vec3d spawn, double yaw, double pitch) throws IOException {
         File config_dir = new File("config");
         config_dir.mkdirs();
         
@@ -46,7 +49,11 @@ public class SetspawnCommand {
         wc.createNewFile();
         FileConfiguration config = new FileConfiguration(wc);
 
-        config.set("spawnpos", spawn.asLong());
+        config.set("spawnX", spawn.x);
+        config.set("spawnY", spawn.y);
+        config.set("spawnZ", spawn.z);
+        config.set("spawnYaw", yaw);
+        config.set("spawnPitch", pitch);
         config.save();
     }
 

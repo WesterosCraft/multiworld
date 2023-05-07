@@ -19,13 +19,12 @@ public class SpawnCommand {
 
     public static int run(MinecraftServer mc, ServerPlayerEntity plr, String[] args) {
         ServerWorld w = plr.getWorld();
-        BlockPos sp = getSpawn(w);
-        TeleportTarget target = new TeleportTarget(new Vec3d(sp.getX(), sp.getY(), sp.getZ()), new Vec3d(1, 1, 1), 0f, 0f);
+        TeleportTarget target = getSpawn(w);
         ServerPlayerEntity teleported = FabricDimensionInternals.changeDimension(plr, w, target);
         return 1;
     }
 
-    public static BlockPos getSpawn(ServerWorld w) {
+    public static TeleportTarget getSpawn(ServerWorld w) {
         File config_dir = new File("config");
         config_dir.mkdirs();
         
@@ -39,18 +38,27 @@ public class SpawnCommand {
         File namespace = new File(worlds, id.getNamespace());
         namespace.mkdirs();
 
+        BlockPos sp = w.getSpawnPos();
+        double x = sp.getX();
+        double y = sp.getY();
+        double z = sp.getZ();
+        double spy = w.getSpawnAngle();
+        double spp = 0.0;
         File wc = new File(namespace, id.getPath() + ".yml");
-        if (!wc.exists()) {
-            return w.getSpawnPos();
+        if (wc.exists()) {
+        	FileConfiguration config;
+	        try {
+	            config = new FileConfiguration(wc);
+	            x = config.getDouble("spawnX");
+	            y = config.getDouble("spawnY");
+	            z = config.getDouble("spawnZ");
+	            spy = config.getDouble("spawnYaw");
+	            spp = config.getDouble("spawnPitch");
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
         }
-        FileConfiguration config;
-        try {
-            config = new FileConfiguration(wc);
-            return BlockPos.fromLong(config.getLong("spawnpos"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return w.getSpawnPos();
-        }
+        return new TeleportTarget(new Vec3d(x, y, z), new Vec3d(0, 0, 0), (float) spy, (float) spp);
     }
 
 }

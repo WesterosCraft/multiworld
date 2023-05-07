@@ -155,7 +155,7 @@ public class MultiworldMod {
         }
 
         if (args[0].equalsIgnoreCase("version") && (ALL || Perm.has(plr, "multiworld.cmd")) ) {
-            plr.sendMessage(new LiteralText("Mutliworld Mod (Fabric) version 1.2"), false);
+            plr.sendMessage(new LiteralText("Westeroscraft Mutliworld Mod version 1.4.2"), false);
             return 1;
         }
 

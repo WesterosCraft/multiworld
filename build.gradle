@@ -29,7 +29,7 @@ allprojects {
     apply plugin: "maven-publish"
 
     archivesBaseName = rootProject.archives_base_name
-    version = rootProject.mod_version
+    version = "${rootProject.mod_version}.${System.getenv().BUILD_NUMBER ?: 'Dev'}"
     group = rootProject.maven_group
 
     repositories {

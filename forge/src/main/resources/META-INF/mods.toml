@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[38,)"
+loaderVersion = "[40,)"
 #issueTrackerURL = ""
 license = "MIT"
 
@@ -16,13 +16,13 @@ Adds support for teleporting to & creating multiple worlds.
 [[dependencies.multiworld]]
 modId = "forge"
 mandatory = true
-versionRange = "[38,)"
+versionRange = "[40,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.multiworld]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.18,)"
+versionRange = "[1.18.2,)"
 ordering = "NONE"
 side = "BOTH"

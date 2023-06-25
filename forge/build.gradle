@@ -41,6 +41,8 @@ dependencies {
     
     //common( project(path: ":fantasy-forge") )
     //shadowCommon( project(path: ":fantasy-forge") )
+    
+    compileOnly 'net.luckperms:api:5.4'
 }
 
 processResources {

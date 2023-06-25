@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import me.isaiah.multiworld.config.FileConfiguration;
 import dimapi.FabricDimensionInternals;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;

@@ -31,6 +31,9 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.Difficulty;
 import net.minecraft.util.registry.RegistryKey;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Multiworld version 1.3
  */
@@ -40,7 +43,8 @@ public class MultiworldMod {
     public static MinecraftServer mc;
     public static String CMD = "mw";
     public static ICreator world_creator;
-    
+	public static final Logger log = LogManager.getLogger("multiworld");
+
     public static void setICreator(ICreator ic) {
         world_creator = ic;
     }
@@ -51,7 +55,7 @@ public class MultiworldMod {
 
     // On mod init
     public static void init() {
-        System.out.println(" Multiworld init");
+    	MultiworldMod.log.info(" Multiworld init");
     }
 
     // On server start

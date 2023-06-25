@@ -3,14 +3,11 @@ package me.isaiah.multiworld.command;
 import java.util.HashMap;
 
 import dimapi.FabricDimensionInternals;
-import net.minecraft.block.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
 
 public class TpCommand {
@@ -29,7 +26,7 @@ public class TpCommand {
             ServerWorld w = worlds.get(arg1);
 
             TeleportTarget target = SpawnCommand.getSpawn(w);
-            plr.sendMessage(new LiteralText("Telelporting...").formatted(Formatting.GOLD), false);
+            plr.sendMessage(new LiteralText("Teleporting...").formatted(Formatting.GOLD), false);
             
             FabricDimensionInternals.changeDimension(plr, w, target);
             return 1;

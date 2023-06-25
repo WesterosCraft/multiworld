@@ -2,9 +2,7 @@ package me.isaiah.multiworld.forge;
 
 import me.isaiah.multiworld.MultiworldMod;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -18,7 +16,6 @@ public class MultiworldModForge {
         MinecraftForge.EVENT_BUS.register(this);
         new xyz.nucleoid.fantasy.FantasyInitializer();
         ForgeWorldCreator.init();
-        PermForge.init();
         MultiworldMod.init();
     }
 
@@ -29,6 +26,7 @@ public class MultiworldModForge {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         MultiworldMod.on_server_started(event.getServer());
+        PermForge.init();
     }
     
     @SubscribeEvent

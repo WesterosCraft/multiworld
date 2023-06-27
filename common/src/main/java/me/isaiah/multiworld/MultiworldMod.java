@@ -67,12 +67,14 @@ public class MultiworldMod {
     public static void register_commands(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(literal(CMD)
                     .requires(source -> {
-                        try {
-                            return Perm.has(source.getPlayer(), "multiworld.cmd") ||
-                                    Perm.has(source.getPlayer(), "multiworld.admin");
-                        } catch (CommandSyntaxException e) {
-                            return source.hasPermissionLevel(1);
-                        }
+                    	if (source.getEntity() instanceof ServerPlayerEntity) {
+                    		try {
+                    			return Perm.has(source.getPlayer(), "multiworld.cmd") ||
+                                    Perm.has(source.getPlayer(), "multiworld.admin");                    		                        	
+                    		} catch (CommandSyntaxException e) {
+                    		}
+                    	}
+            			return source.hasPermissionLevel(1);
                     }) 
                         .executes(ctx -> {
                             return broadcast(ctx.getSource(), Formatting.AQUA, null);
@@ -89,86 +91,59 @@ public class MultiworldMod {
     }
     
     public static int broadcast(ServerCommandSource source, Formatting formatting, String message) throws CommandSyntaxException {
-        final ServerPlayerEntity plr = source.getPlayer();
-
         if (null == message) {
-            plr.sendMessage(new LiteralText("Usage:").formatted(Formatting.AQUA), false);
+        	source.sendFeedback(new LiteralText("Usage:").formatted(Formatting.AQUA), false);
             return 1;
         }
 
-        boolean ALL = Perm.has(plr, "multiworld.admin");
+        boolean ALL = Perm.has(source, "multiworld.admin");
         String[] args = message.split(" ");
-        
-        /*if (args[0].equalsIgnoreCase("portaltest")) {
-            BlockPos pos = plr.getBlockPos();
-            pos = pos.add(2, 0, 2);
-            ServerWorld w = plr.getWorld();
 
-            Portal p = new Portal();
-            for (int x = 0; x < 4; x++) {
-                for (int y = 0; y < 5; y++) {
-                    BlockPos pos2 = pos.add(x, y, 0);
-                    if ((x > 0 && x < 3) && (y > 0 && y < 4)) {
-                        p.blocks.add(pos2);
-                        w.setBlockState(pos2, Blocks.NETHER_PORTAL.getDefaultState());
-                    } else
-                    w.setBlockState(pos2, Blocks.STONE.getDefaultState());
-                }
-            }
-            p.addToMap();
-            try {
-                p.save();
-            } catch (IOException e) {
-                plr.sendMessage(new LiteralText("Failed saving portal data. Check console for details.").formatted(Formatting.RED), false);
-                e.printStackTrace();
-            }
-        }*/
-
-        if (args[0].equalsIgnoreCase("setspawn") && (ALL || Perm.has(plr, "multiworld.setspawn") )) {
-            return SetspawnCommand.run(mc, plr, args);
+        if (args[0].equalsIgnoreCase("setspawn") && (ALL || Perm.has(source, "multiworld.setspawn") )) {
+            return SetspawnCommand.run(mc, source.getPlayer(), args);
         }
 
-        if (args[0].equalsIgnoreCase("spawn") && (ALL || Perm.has(plr, "multiworld.spawn")) ) {
-            return SpawnCommand.run(mc, plr, args);
+        if (args[0].equalsIgnoreCase("spawn") && (ALL || Perm.has(source, "multiworld.spawn")) ) {
+            return SpawnCommand.run(mc, source.getPlayer(), args);
         }
 
         if (args[0].equalsIgnoreCase("tp") ) {
-            if (!(ALL || Perm.has(plr, "multiworld.tp"))) {
-                plr.sendMessage(Text.of("No permission! Missing permission: multiworld.tp"), false);
+            if (!(ALL || Perm.has(source, "multiworld.tp"))) {
+                source.sendFeedback(Text.of("No permission! Missing permission: multiworld.tp"), false);
                 return 1;
             }
             if (args.length == 1) {
-                plr.sendMessage(new LiteralText("Usage: /" + CMD + " tp <world>"), false);
+                source.sendFeedback(new LiteralText("Usage: /" + CMD + " tp <world>"), false);
                 return 0;
             }
-            return TpCommand.run(mc, plr, args);
+            return TpCommand.run(mc, source.getPlayer(), args);
         }
 
         if (args[0].equalsIgnoreCase("list") ) {
-            if (!(ALL || Perm.has(plr, "multiworld.cmd"))) {
-                plr.sendMessage(Text.of("No permission! Missing permission: multiworld.cmd"), false);
+            if (!(ALL || Perm.has(source, "multiworld.cmd"))) {
+                source.sendFeedback(Text.of("No permission! Missing permission: multiworld.cmd"), false);
                 return 1;
             }
-            plr.sendMessage(new LiteralText("All Worlds:").formatted(Formatting.AQUA), false);
+            source.sendFeedback(new LiteralText("All Worlds:").formatted(Formatting.AQUA), false);
             mc.getWorlds().forEach(world -> {
                 String name = world.getRegistryKey().getValue().toString();
                 if (name.startsWith("multiworld:")) name = name.replace("multiworld:", "");
 
-                plr.sendMessage(new LiteralText("- " + name), false);
+                source.sendFeedback(new LiteralText("- " + name), false);
             });
         }
 
-        if (args[0].equalsIgnoreCase("version") && (ALL || Perm.has(plr, "multiworld.cmd")) ) {
-            plr.sendMessage(new LiteralText("Westeroscraft Mutliworld Mod version 1.4.2"), false);
+        if (args[0].equalsIgnoreCase("version") && (ALL || Perm.has(source, "multiworld.cmd")) ) {
+        	source.sendFeedback(new LiteralText("Westeroscraft Mutliworld Mod version 1.4.2"), false);
             return 1;
         }
 
         if (args[0].equalsIgnoreCase("create") ) {
-            if (!(ALL || Perm.has(plr, "multiworld.create"))) {
-                plr.sendMessage(Text.of("No permission! Missing permission: multiworld.create"), false);
+            if (!(ALL || Perm.has(source, "multiworld.create"))) {
+                source.sendFeedback(Text.of("No permission! Missing permission: multiworld.create"), false);
                 return 1;
             }
-            return CreateCommand.run(mc, plr, args);
+            return CreateCommand.run(mc, source, args);
         }
 
         return Command.SINGLE_SUCCESS; // Success

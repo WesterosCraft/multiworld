@@ -3,7 +3,7 @@ package me.isaiah.multiworld.command;
 import java.util.Random;
 
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.registry.RegistryKey;
@@ -15,9 +15,9 @@ import me.isaiah.multiworld.MultiworldMod;
 
 public class CreateCommand {
 
-    public static int run(MinecraftServer mc, ServerPlayerEntity plr, String[] args) {
+    public static int run(MinecraftServer mc, ServerCommandSource source, String[] args) {
         if (args.length < 3) {
-            plr.sendMessage(new LiteralText("Usage: /mv create <id> <env>"), false);
+            source.sendFeedback(new LiteralText("Usage: /mv create <id> <env>"), false);
             return 0;
         }
 
@@ -40,7 +40,7 @@ public class CreateCommand {
             dim = DimensionType.THE_END_REGISTRY_KEY;
         }
         else {
-            plr.sendMessage(new LiteralText("Invalid world type " + args[2]), false);
+            source.sendFeedback(new LiteralText("Invalid world type " + args[2]), false);
             return 0;
         }
         
@@ -49,7 +49,7 @@ public class CreateCommand {
         
         MultiworldMod.create_world(arg1, dim, gen, Difficulty.NORMAL);
 
-        plr.sendMessage(new LiteralText("Created world with id: " + args[1]).formatted(Formatting.GREEN), false);
+        source.sendFeedback(new LiteralText("Created world with id: " + args[1]).formatted(Formatting.GREEN), false);
         
         return 1;
     }

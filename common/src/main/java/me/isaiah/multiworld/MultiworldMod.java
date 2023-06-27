@@ -66,16 +66,6 @@ public class MultiworldMod {
     // On command register
     public static void register_commands(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(literal(CMD)
-                    .requires(source -> {
-                    	if (source.getEntity() instanceof ServerPlayerEntity) {
-                    		try {
-                    			return Perm.has(source.getPlayer(), "multiworld.cmd") ||
-                                    Perm.has(source.getPlayer(), "multiworld.admin");                    		                        	
-                    		} catch (CommandSyntaxException e) {
-                    		}
-                    	}
-            			return source.hasPermissionLevel(1);
-                    }) 
                         .executes(ctx -> {
                             return broadcast(ctx.getSource(), Formatting.AQUA, null);
                         })
